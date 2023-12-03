@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { Navigate, useNavigate } from 'react-router';
 import { Route, Routes } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/client';
 
@@ -47,6 +47,10 @@ function App() {
           />
           <Route path="/login"
             element={<LoginPage onLogin={handleLogin} />}
+          />
+          <Route
+            path="*"
+            element={<Navigate to="/" />}
           />
         </Routes>
       </main>
