@@ -10,3 +10,6 @@ For each folder client/server install all dependencies via `npm i`
 To start client - open terminal in client folder and execute `npm start`
 To start server - open terminal in server folder and execute `npm start`
 To reset db to initial state run command `node scripts/create-db.js`
+
+# Variable
+Server uses JWR_SECRET enviroment varibable, don`t forget to create .env file with your secret.
