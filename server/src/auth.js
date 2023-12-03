@@ -1,8 +1,11 @@
 import { expressjwt } from 'express-jwt';
 import jwt from 'jsonwebtoken';
 import { getUserByEmail } from './db/users.js';
+import { config } from 'dotenv';
+config();
 
-const secret = Buffer.from('Zn8Q5tyZ/G1MHltc4F/gTkVJMlrbKiZt', 'base64');
+const jwtSecret = process.env.JWT_SECRET;
+const secret = Buffer.from(jwtSecret, 'base64');
 
 export const authMiddleware = expressjwt({
   algorithms: ['HS256'],
