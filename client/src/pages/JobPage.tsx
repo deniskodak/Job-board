@@ -8,7 +8,7 @@ function JobPage() {
   const { job, loading, error } = useJob(jobId);
   
   if(loading) return <div>Loading...</div>
-  if(error) return <div class="has-text-danger">An error ocurred, please try another Job</div>
+  if(error) return <div className="has-text-danger">An error ocurred, please try another Job</div>
 
   return (
     <div>

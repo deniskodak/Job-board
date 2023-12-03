@@ -1,4 +1,6 @@
-function PaginationBar({ currentPage, totalPages, onPageChange }) {
+import { PaginationBarProps } from "../types/common";
+
+function PaginationBar({ currentPage, totalPages, onPageChange }: PaginationBarProps) {
   const pages = getVisiblePages(currentPage, totalPages);
   return (
     <nav className="pagination is-centered" role="navigation" aria-label="pagination">
@@ -13,7 +15,7 @@ function PaginationBar({ currentPage, totalPages, onPageChange }) {
         &#x25B6;
       </button>
       <ul className="pagination-list">
-        {pages.map((page) => (
+        {pages.map((page: number) => (
           <li key={page}>
             <PageButton page={page} currentPage={currentPage}
               onClick={() => onPageChange(page)}
@@ -64,7 +66,7 @@ function PageButton({ page, currentPage, onClick }) {
  * getVisiblePages(5, 8) // => [1, '<', 4, 5, 6, 7, 8]
  * getVisiblePages(5, 10) // => [1, '<', 4, 5, 6, '>', 10]
  */
-function getVisiblePages(current, total) {
+function getVisiblePages(current: number, total:number): (string | number)[] {
   if (total <= 7) {
     return range(total);
   }

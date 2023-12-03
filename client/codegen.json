@@ -1,0 +1,18 @@
+{
+    "overwrite": true,
+    "schema": "../server/src/schema.graphql",
+    "documents": "src/lib/graphql/queries.ts",
+    "output": "src/generated/",
+    "generates": {
+        "src/generated/": {
+            "preset": "client",
+            "plugins": [],
+            "config": {
+                "skipTypename": true
+            },
+            "presetConfig": {
+                "fragmentMasking": false
+            }
+        }
+    }
+}

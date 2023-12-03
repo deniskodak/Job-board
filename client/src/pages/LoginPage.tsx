@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { login } from '../lib/auth';
+import { LoginPageProps } from '../types/common';
 
-function LoginPage({ onLogin }) {
+function LoginPage({ onLogin }: LoginPageProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: React.SyntheticEvent) => {
+
     event.preventDefault();
     setError(false);
     const user = await login(email, password);

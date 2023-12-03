@@ -2,12 +2,14 @@ import { Link } from 'react-router-dom';
 import { logout } from '../lib/auth';
 
 function NavBar({ user, onLogout }) {
+  
   const handleLogout = () => {
     logout();
     onLogout();
   };
 
   const loggedIn = Boolean(user);
+
   return (
     <nav className="navbar">
       <div className="navbar-start">

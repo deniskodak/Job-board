@@ -8,7 +8,7 @@ function CompanyPage() {
   
   return (
     <>
-    {error && <div class="has-text-danger">An error ocurred, please try another Company</div>}
+    {error && <div className="has-text-danger">An error ocurred, please try another Company</div>}
     {loading && <div>Loading...</div>}
     {company && 
     <div>

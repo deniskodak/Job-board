@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Route, Routes } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/client';
@@ -12,19 +12,20 @@ import CreateJobPage from './pages/CreateJobPage';
 import HomePage from './pages/HomePage';
 import JobPage from './pages/JobPage';
 import LoginPage from './pages/LoginPage';
+import { User } from './types/auth.interface';
 
 function App() {
   const navigate = useNavigate();
-  const [user, setUser] = useState(getUser);
+  const [user, setUser] = useState<User | null>(getUser);
 
-  const handleLogin = (user) => {
+  const handleLogin = (user: User | null) => {
     setUser(user);
-    navigate('/');
+    navigate('/')
   };
 
   const handleLogout = () => {
     setUser(null);
-    navigate('/');
+    navigate('/')
   };
 
   return (

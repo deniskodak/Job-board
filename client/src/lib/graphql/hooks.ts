@@ -48,7 +48,7 @@ export const useCreateJob = () => {
             update: (cache, result) => {
               cache.writeQuery({ 
                   query: getJobByIdQuery, // query of request we want to prevent,
-                  variables: { id: result.data.job.id }, // vars of request we want to prevent
+                  variables: { id: result.data.job['id'] }, // vars of request we want to prevent
                   data: result.data // data we want to cache ( same data will be returned by server for getJobById )
              })
           }});
@@ -56,5 +56,5 @@ export const useCreateJob = () => {
           return data?.job;
     }, [mutate])
 
-    return [handleMutate, { error: Boolean(error), loading }]
+    return {mutate: handleMutate, error: Boolean(error), loading }
 }

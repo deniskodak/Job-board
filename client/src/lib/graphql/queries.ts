@@ -1,8 +1,7 @@
 import { ApolloClient, ApolloLink, InMemoryCache, concat, createHttpLink, gql } from '@apollo/client'
 import { getAccessToken } from '../auth';
-
-const api_graphql_url = 'http://localhost:9000/graphql'
-
+import { API_URL } from '../api';
+import { graphql } from '../../generated/gql';
 
 const authLink = new ApolloLink((operation, forward) => {
     const token = getAccessToken();
@@ -14,7 +13,7 @@ const authLink = new ApolloLink((operation, forward) => {
     return forward(operation)
 })
 
-const httpLink = createHttpLink({ uri: api_graphql_url });
+const httpLink = createHttpLink({ uri: `${API_URL}graphql` });
 
 export const apolloClient = new ApolloClient({ cache: new InMemoryCache(), link: concat(authLink, httpLink),
     defaultOptions: {
@@ -23,7 +22,7 @@ export const apolloClient = new ApolloClient({ cache: new InMemoryCache(), link:
     }
 });
 
-const JobDetailFragment = gql`
+export const JobDetailFragment = graphql(`
     fragment JobDetail on Job {
         id
         date
@@ -34,10 +33,10 @@ const JobDetailFragment = gql`
             name
         }
     }
-`
+`);
 
-export const getJobsQuery = gql`
-query getJobs($input: GetJobsInput) {
+export const getJobsQuery = graphql(`
+query getAllJobs($input: GetJobsInput) {
     jobs(input: $input) {
         items {
             ...JobDetail
@@ -45,21 +44,19 @@ query getJobs($input: GetJobsInput) {
         totalCount
     }
   }
-  ${JobDetailFragment}
-`;
+`);
 
-export const getJobByIdQuery = gql`
-query($id: ID!) {
+export const getJobByIdQuery = graphql(`
+query getJobById($id: ID!) {
     job(id: $id) {
         ...JobDetail
     }
 }
-    ${JobDetailFragment}
-`;
+`);
 
 
-export const getCompanyByIdQuery = gql`
-query($id: ID!) {
+export const getCompanyByIdQuery = graphql(`
+query getCompanyById($id: ID!) {
     company(id: $id) {
         id
         name
@@ -72,16 +69,15 @@ query($id: ID!) {
         }
     }
 }
-`;
+`);
 
-export const createJobMutation = gql`
-mutation ($input: CreateJobInput!) {
+export const createJobMutation = graphql(`
+mutation createJob($input: CreateJobInput!) {
     job: createJob(input: $input) {
         ...JobDetail
     }
-    
 }
-${JobDetailFragment}`;
+`);
 
 export const getJobs = async () => {
     const { data } = await apolloClient.query({ query: getJobsQuery , fetchPolicy: 'network-only'})
@@ -98,7 +94,7 @@ export const createJob = async ({ title = '', description = '' }) => {
     const { data } = await apolloClient.mutate({ mutation: createJobMutation, variables: { input: { title, description } }, update: (cache, result) => {
         cache.writeQuery({ 
             query: getJobByIdQuery, // query of request we want to prevent,
-            variables: { id: result.data.job.id }, // vars of request we want to prevent
+            variables: { id: result.data.job['id'] }, // vars of request we want to prevent
             data: result.data // data we want to cache ( same structure as it would be returned by server for getJobById )
          })
     }})

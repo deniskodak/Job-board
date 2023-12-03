@@ -2,31 +2,27 @@ import JobList from '../components/JobList';
 import PaginationBar from '../components/PaginationBar';
 import { useJobs } from '../lib/graphql/hooks';
 import { useCallback, useState } from 'react';
+import { ApiPagination, SortDirection } from '../types/common';
 
-const SORT_DIRECTIONS = {
-  asc: 'asc',
-  desc: 'desc'
-}
-
-const INITIAL_PAGINATION = {
+const INITIAL_PAGINATION: ApiPagination = {
   limit: 10,
   page: 1
 }
 
 function HomePage() {
-  const [sort, setSort] = useState(SORT_DIRECTIONS.desc);
+  const [sort, setSort] = useState<SortDirection>(SortDirection.desc);
   const [{ limit, page }, setPagination] = useState(INITIAL_PAGINATION)
   const { jobs, totalCount } = useJobs({ sort, limit, page: page - 1 });
   const maxPage = Math.ceil(totalCount / limit);
 
   const changeSort = () => {
     setSort(prevSort => 
-      prevSort === SORT_DIRECTIONS.asc ? SORT_DIRECTIONS.desc : SORT_DIRECTIONS.asc
+      prevSort === SortDirection.asc ? SortDirection.desc : SortDirection.asc
     )
     setPagination(INITIAL_PAGINATION);
   }
 
-  const handlePageChange = useCallback((page) => setPagination(prev => ({...prev, page })),[]);
+  const handlePageChange = useCallback((page: number) => setPagination(prev => ({...prev, page })),[]);
 
   return (
     <div>
