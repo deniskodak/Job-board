@@ -13,3 +13,6 @@ To reset db to initial state run command `node scripts/create-db.js`
 
 # Variable
 Server uses JWR_SECRET enviroment varibable, don`t forget to create .env file with your secret.
+
+# API
+API deployed here https://graphql-job-board.onrender.com
