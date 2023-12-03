@@ -16,3 +16,8 @@ Server uses JWR_SECRET enviroment varibable, don`t forget to create .env file wi
 
 # API
 API deployed here https://graphql-job-board.onrender.com
+
+# Credential for test user
+
+login: alice@facegle.io
+password: alice123
